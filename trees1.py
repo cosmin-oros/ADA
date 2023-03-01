@@ -7,9 +7,13 @@ class Node:
 
 def print_tree(node):
     if node:
+        # inorder tree walk
         print_tree(node.left)
-        print(node)
+        print(node, end=" ")
         print_tree(node.right)
+        # inorder - left - root - right
+        # preorder root - left - right
+        # postorder left - right - root
 
 
 def print_leaf_nodes(root):
@@ -20,7 +24,6 @@ def print_leaf_nodes(root):
     else:
         print_leaf_nodes(root.left)
         print_leaf_nodes(root.right)
-
 
 
 # Create a binary tree with root node 1
