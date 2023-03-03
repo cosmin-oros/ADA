@@ -1,3 +1,6 @@
+from collections import deque
+
+
 class Node:
     def __init__(self, val=None):
         self.val = val
@@ -104,6 +107,51 @@ class BST:
         else:
             self._printPathFromTo(node.left, min_val, max_val)
 
+    def printPathsWithSum(self, s):
+        path = []
+        self.findPathsWithSum(self.root, s, path)
+
+    def findPathsWithSum(self, node, target_sum, path):
+        if node is None:
+            return
+
+        # add the current node to the path
+        path.append(node.val)
+
+        # check if the path sums up to the target sum
+        path_sum = 0
+        for i in range(len(path) - 1, -1, -1):
+            path_sum += path[i]
+            if path_sum == target_sum:
+                print(path[i:])
+
+        # recursively search the left and right subtrees
+        self.findPathsWithSum(node.left, target_sum, path)
+        self.findPathsWithSum(node.right, target_sum, path)
+
+        # remove the current node from the path
+        path.pop()
+
+    def printLevels(self):
+        if self.root is None:
+            return
+
+        queue = deque()
+        queue.append(self.root)
+
+        while queue:
+            # len(queue) - how many nodes are on the respective level
+            for i in range(len(queue)):
+                node = queue.popleft()
+                print(node.val, end=" ")
+
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+            print()
+
 
 # IsPerfectlyBalanced - returns true if the BST is perfectly balanced #
 # (A binary tree is said to be perfectly balanced if for every node,
@@ -145,7 +193,9 @@ bst.insert(7)
 bst.insert(8)
 
 print(IsPerfectlyBalanced(bst.root))
+print()
 print(bst.searchClosest(6).val)
+print()
 print(bst.checkExistTwoNodesWithSum(14))
 
 print()
@@ -154,3 +204,7 @@ node1 = bst.root.left
 node2 = bst.root.right
 
 bst.printPathFromTo(node1, node2)
+print()
+bst.printPathsWithSum(20)
+print()
+bst.printLevels()
