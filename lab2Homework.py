@@ -80,6 +80,30 @@ class BST:
         return self._checkExistTwoNodesWithSum(node.left, s, seen) \
                or self._checkExistTwoNodesWithSum(node.right, s, seen)
 
+    def printPathFromTo(self, node1, node2):
+        if node1 is None or node2 is None:
+            return
+        if node1.val < node2.val:
+            self._printPathFromTo(self.root, node1.val, node2.val)
+        else:
+            self._printPathFromTo(self.root, node2.val, node1.val)
+
+    # if the value of the current node is between min and max we print it and then
+    # recursively move to the left and right with updated values for min and max
+    # if the value of the current node is smaller than the min we move to the
+    # right (to a larger value), if it is larger than max we move to the left
+    def _printPathFromTo(self, node, min_val, max_val):
+        if node is None:
+            return
+        if min_val <= node.val <= max_val:
+            print(node.val)
+            self._printPathFromTo(node.left, min_val, node.val)
+            self._printPathFromTo(node.right, node.val, max_val)
+        elif node.val < min_val:
+            self._printPathFromTo(node.right, min_val, max_val)
+        else:
+            self._printPathFromTo(node.left, min_val, max_val)
+
 
 # IsPerfectlyBalanced - returns true if the BST is perfectly balanced #
 # (A binary tree is said to be perfectly balanced if for every node,
@@ -106,20 +130,27 @@ def count_nodes(node):
     return 1 + count_nodes(node.left) + count_nodes(node.right)
 
 
-#   4
+#   6
 #  / \
 #  5  9
 # /\  /
-# 3 7 11
+# 3 7 8
 
 bst = BST()
-bst.insert(4)
+bst.insert(6)
 bst.insert(5)
 bst.insert(9)
 bst.insert(3)
 bst.insert(7)
-bst.insert(11)
+bst.insert(8)
 
 print(IsPerfectlyBalanced(bst.root))
 print(bst.searchClosest(6).val)
 print(bst.checkExistTwoNodesWithSum(14))
+
+print()
+
+node1 = bst.root.left
+node2 = bst.root.right
+
+bst.printPathFromTo(node1, node2)
