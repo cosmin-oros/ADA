@@ -69,6 +69,22 @@ def isPostorderArray(array):
     return isPostorderArray(array[:i]) and isPostorderArray(array[i:-1])
 
 
+def createBSTfromPostOrderArray(array):
+    if not array or not isPostorderArray(array):
+        return None
+
+    root = Node(array[-1])
+    i = 0
+
+    while i < len(array) - 1 and array[i] < root.val:
+        i += 1
+
+    root.left = createBSTfromPostOrderArray(array[:i])
+    root.right = createBSTfromPostOrderArray(array[i:-1])
+
+    return root
+
+
 def printBST(root):
     if root is None:
         return
@@ -87,3 +103,18 @@ printBST(root)
 print()
 
 print(isPostorderArray(array))
+
+array1 = [1, 3, 2, 5, 7, 6, 4]
+array2 = [1, 2, 3, 4, 5, 6, 7]
+array3 = [7, 6, 5, 4, 3, 2, 1]
+
+tree1 = createBSTfromPostOrderArray(array1)
+tree2 = createBSTfromPostOrderArray(array2)
+tree3 = createBSTfromPostOrderArray(array3)
+
+printBST(tree1)
+print()
+printBST(tree2)
+print()
+printBST(tree3)
+print()
