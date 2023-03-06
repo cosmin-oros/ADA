@@ -44,11 +44,29 @@ class BST:
 def createBalancedBSTfromSortedArray(array):
     if not array:
         return None
+
     mid = len(array) // 2
     root = Node(array[mid])
     root.left = createBalancedBSTfromSortedArray(array[:mid])
     root.right = createBalancedBSTfromSortedArray(array[mid+1:])
+
     return root
+
+
+def isPostorderArray(array):
+    if not array:
+        return True
+
+    root = array[-1]
+    i = 0
+    while i < len(array) - 1 and array[i] < root:
+        i += 1
+
+    for j in range(i, len(array) - 1):
+        if array[j] < root:
+            return False
+
+    return isPostorderArray(array[:i]) and isPostorderArray(array[i:-1])
 
 
 def printBST(root):
@@ -65,3 +83,7 @@ array.sort()
 root = createBalancedBSTfromSortedArray(array)
 
 printBST(root)
+
+print()
+
+print(isPostorderArray(array))
