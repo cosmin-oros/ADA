@@ -1,5 +1,5 @@
 from collections import deque
-
+import time
 
 class Node:
     def __init__(self, val=None):
@@ -178,19 +178,42 @@ def count_nodes(node):
     return 1 + count_nodes(node.left) + count_nodes(node.right)
 
 
-#   6
-#  / \
-#  5  9
-# /\  /
-# 3 7 8
-
 bst = BST()
+
+start = time.perf_counter_ns()
 bst.insert(6)
 bst.insert(5)
 bst.insert(9)
 bst.insert(3)
 bst.insert(7)
 bst.insert(8)
+bst.insert(9)
+end = time.perf_counter_ns()
+
+print("BST Random values insertion time: ", end - start, "ns")
+print()
+
+bst2 = BST()
+
+start = time.perf_counter_ns()
+bst2.insert(1)
+bst2.insert(2)
+bst2.insert(3)
+bst2.insert(4)
+bst2.insert(5)
+bst2.insert(6)
+bst2.insert(7)
+end = time.perf_counter_ns()
+
+print("BST increasing order values insertion time: ", end - start, "ns")
+print()
+
+start = time.perf_counter_ns()
+bst2.search(7)
+end = time.perf_counter_ns()
+
+print("BST search time: ", end - start, "ns")
+print()
 
 print(IsPerfectlyBalanced(bst.root))
 print()

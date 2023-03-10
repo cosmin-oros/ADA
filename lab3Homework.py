@@ -1,3 +1,6 @@
+import time
+
+
 # AVL Tree Node
 class Node:
     def __init__(self, val):
@@ -10,6 +13,19 @@ class Node:
 class AVL:
     def __init__(self):
         self.root = None
+
+    def search(self, val):
+        return self._search(val, self.root)
+
+    def _search(self, val, node):
+        if not node:
+            return False
+        elif node.val == val:
+            return True
+        elif val < node.val:
+            return self._search(val, node.left)
+        else:
+            return self._search(val, node.right)
 
     def height(self, node):
         if node is None:
@@ -88,6 +104,7 @@ class AVL:
 
 avl_tree = AVL()
 
+start = time.perf_counter_ns()
 avl_tree.insert(4)
 avl_tree.insert(9)
 avl_tree.insert(2)
@@ -95,5 +112,34 @@ avl_tree.insert(7)
 avl_tree.insert(13)
 avl_tree.insert(3)
 avl_tree.insert(5)
+end = time.perf_counter_ns()
 
 avl_tree.inorder_traversal(avl_tree.root)
+print()
+print("AVL Random values insertion time: ", end - start, "ns")
+print()
+
+avl_tree2 = AVL()
+
+start = time.perf_counter_ns()
+avl_tree2.insert(1)
+avl_tree2.insert(2)
+avl_tree2.insert(3)
+avl_tree2.insert(4)
+avl_tree2.insert(5)
+avl_tree2.insert(6)
+avl_tree2.insert(7)
+end = time.perf_counter_ns()
+
+avl_tree2.inorder_traversal(avl_tree2.root)
+print()
+print("AVL increasing order values insertion time: ", end - start, "ns")
+print()
+
+start = time.perf_counter_ns()
+avl_tree2.search(7)
+end = time.perf_counter_ns()
+
+print()
+print("AVL search time: ", end - start, "ns")
+print()
