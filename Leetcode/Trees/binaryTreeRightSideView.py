@@ -27,6 +27,7 @@ class Solution(object):
                     q.append(node.left)
                     q.append(node.right)
             if rightSide:
+                # add the right most node on that level
                 res.append(rightSide.val)
         return res
 
