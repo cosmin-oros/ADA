@@ -21,6 +21,6 @@ class Solution(object):
         return res
 
 
-nums = [2,3,1,1,4]
+nums = [2, 3, 1, 1, 4]
 sol = Solution()
 print(sol.jump(nums))
